@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wishes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="wishes-page">
+    <div class="top-buttons">
+        <button id="sendWishBtn" class="btn">💌 Send a Wish</button>
+        <button id="showWishesBtn" class="btn">🎥 View Wishes</button>
+    </div>
+
+    <div class="video-section">
+        <video controls width="400" class="birthday-video">
+            <source src="media/birthday.mp4" type="video/mp4">
+            Your browser does not support video.
+        </video>
+    </div>
+
+    <div class="wish-container" id="wishContainer"></div>
+
+    <div id="wishForm" class="modal hidden">
+        <div class="modal-content">
+            <h2>Send a Wish 🎈</h2>
+            <input type="text" id="name" placeholder="Your Name">
+            <textarea id="message" placeholder="Your Message"></textarea>
+            <button id="submitWish" class="btn">Submit</button>
+            <button id="closeModal" class="btn secondary">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
