@@ -166,7 +166,7 @@
 
   <button onclick="loginPrompt()">✨ Celebrate ✨</button>
 
-  <audio id="bgMusic" autoplay loop>
+  <audio id="bgMusic" autoplay loop muted>
     <source src="media/bgm.mp3" type="audio/mpeg">
   </audio>
 
@@ -272,8 +272,9 @@
     setTimeout(() => clearInterval(fwInterval), 5000);
     animateFireworks();
 
-    // 🎵 Login & Audio trigger
+    // 🎵 Login & Audio trigger + Long vibration
     function loginPrompt() {
+      if (navigator.vibrate) navigator.vibrate([300, 100, 300, 100, 300]); // 💥 long vibration
       const id = prompt("Enter your ID:");
       const pass = prompt("Enter your Password:");
       const music = document.getElementById('bgMusic');
