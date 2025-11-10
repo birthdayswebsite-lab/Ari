@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Happy Birthday Roshni 💖</title>
+<title>🎂 Happy Birthday Roshni 🎂</title>
 <style>
   body {
     margin: 0;
     height: 100vh;
-    background: radial-gradient(circle at bottom, #001f3f, #000);
     overflow: hidden;
+    background: radial-gradient(circle at bottom, #001f3f, #000);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,8 +23,7 @@
     font-size: 3rem;
     text-shadow: 0 0 30px #ff69b4, 0 0 60px #ff1493;
     animation: glow 2s ease-in-out infinite alternate;
-    position: relative;
-    z-index: 5;
+    z-index: 10;
   }
 
   @keyframes glow {
@@ -33,22 +32,13 @@
   }
 
   p {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     max-width: 700px;
-    margin: 20px auto;
-    color: #f0f0f0;
+    margin: 20px;
     text-shadow: 0 0 10px #fff;
-    animation: fadeIn 3s ease;
-    position: relative;
-    z-index: 5;
+    z-index: 10;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Celebrate Button */
   button {
     background: linear-gradient(90deg, #ff0066, #ff6600, #ffff33);
     border: none;
@@ -57,9 +47,8 @@
     font-size: 1.4rem;
     color: white;
     font-weight: bold;
-    letter-spacing: 1px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s;
     position: absolute;
     bottom: 40px;
     z-index: 10;
@@ -84,7 +73,6 @@
     border-radius: 50%;
     opacity: 0.9;
     animation: floatUp 8s linear forwards;
-    z-index: 2;
   }
 
   .string {
@@ -105,62 +93,22 @@
   }
 
   @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-120vh); opacity: 0; }
   }
 
-  /* Confetti */
-  .confetti {
-    position: absolute;
-    width: 8px;
-    height: 14px;
-    border-radius: 2px;
-    animation: fall 4s linear infinite;
-  }
-
-  @keyframes fall {
-    from { transform: translateY(-10px) rotate(0deg); }
-    to { transform: translateY(110vh) rotate(720deg); }
-  }
-
-  /* Sparkles */
-  .sparkle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: white;
-    border-radius: 50%;
-    animation: sparkle 2s infinite ease-in-out;
-  }
-
-  @keyframes sparkle {
-    0%, 100% { opacity: 0; transform: scale(0); }
-    50% { opacity: 1; transform: scale(1.5); }
-  }
-
-  /* Fireworks */
+  /* Fireworks canvas */
   canvas {
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
   }
-
-  /* GIF Image */
-  .gif-container {
-    position: absolute;
-    top: 15%;
-    width: 150px;
-    height: auto;
-    z-index: 5;
-  }
 </style>
 </head>
 <body>
 
-  <img src="media/pic1.gif" alt="Celebration GIF" class="gif-container">
-
-  <h1>🎂 Happy Birthday, Roshni 🎂</h1>
+  <h1>🎉 Happy Birthday, Roshni 🎉</h1>
   <p>“Make It Count, Live The Moment” 💕</p>
   <p>"Click anywhere to fly?"</p>
 
@@ -174,7 +122,6 @@
 
   <script>
     const balloonColors = ['#0033cc', '#ff0000', '#ffff00', '#660066', '#ff4500'];
-    const confettiColors = ['#ff3b3b', '#ffd93b', '#3b9eff', '#9c27b0', '#ff8a00'];
 
     function createBalloon(x = Math.random() * innerWidth, y = innerHeight + 100) {
       const b = document.createElement('div');
@@ -187,40 +134,22 @@
       s.className = 'string';
       b.appendChild(s);
       document.body.appendChild(b);
-      setTimeout(() => b.remove(), 10000);
+      setTimeout(() => b.remove(), 9000);
     }
 
+    // Continuous balloon flow
     setInterval(() => { for (let i = 0; i < 2; i++) createBalloon(); }, 1000);
-    window.onload = () => {
-      for (let i = 0; i < 30; i++) {
-        setTimeout(() => createBalloon(Math.random() * innerWidth, innerHeight), i * 150);
-      }
-    };
 
-    // Confetti
-    function createConfetti() {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-      c.style.left = Math.random() * 100 + 'vw';
-      c.style.top = '-10px';
-      c.style.animationDuration = (3 + Math.random() * 2) + 's';
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 5000);
-    }
-    setInterval(createConfetti, 200);
+    // Balloons appear on touch or click
+    document.addEventListener('click', e => {
+      createBalloon(e.clientX, e.clientY);
+    });
+    document.addEventListener('touchstart', e => {
+      const touch = e.touches[0];
+      createBalloon(touch.clientX, touch.clientY);
+    });
 
-    // Sparkles
-    for (let i = 0; i < 40; i++) {
-      let s = document.createElement('div');
-      s.className = 'sparkle';
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.top = Math.random() * 100 + 'vh';
-      s.style.animationDelay = Math.random() * 2 + 's';
-      document.body.appendChild(s);
-    }
-
-    // Fireworks
+    // Fireworks setup
     const canvas = document.getElementById('fireworks');
     const ctx = canvas.getContext('2d');
     canvas.width = innerWidth;
@@ -255,10 +184,16 @@
       });
       requestAnimationFrame(animateFireworks);
     }
-
     animateFireworks();
 
-    // 🎉 Button click = vibration + music + fireworks + login
+    // Initial fireworks when page loads
+    window.onload = () => {
+      for (let i = 0; i < 4; i++) {
+        setTimeout(() => createFirework(innerWidth/2, innerHeight/2), i * 400);
+      }
+    };
+
+    // Button click → play music, vibration, fireworks, redirect
     document.getElementById('celebrateBtn').addEventListener('click', () => {
       const music = document.getElementById('bgMusic');
       music.muted = false;
@@ -267,15 +202,15 @@
       // Strong vibration pattern
       if (navigator.vibrate) navigator.vibrate([500, 200, 500, 200, 800]);
 
-      // Burst fireworks at center
-      for (let i = 0; i < 6; i++) {
-        setTimeout(() => createFirework(innerWidth/2, innerHeight/2), i * 200);
+      // Burst fireworks
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => createFirework(innerWidth/2, innerHeight/2), i * 250);
       }
 
       const id = prompt("Enter your ID:");
       const pass = prompt("Enter your Password:");
       if (id === "roshni" && pass === "roshni") {
-        alert("🎉 Welcome Roshni! Let’s start the celebration!");
+        alert("🎂 Welcome Roshni! Let’s begin the celebration!");
         window.location.href = "select.html";
       } else {
         alert("❌ Incorrect ID or Password!");
@@ -284,4 +219,3 @@
   </script>
 </body>
 </html>
-
