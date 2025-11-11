@@ -3,219 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎂 Happy Birthday Roshni 🎂</title>
+<title>🎂 Birthday Celebration Board 🎂</title>
 <style>
+  * { box-sizing: border-box; }
   body {
     margin: 0;
     height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    background: linear-gradient(to right, #000428, #004e92);
+    overflow-x: hidden;
+  }
+
+  /* 🖼️ Left slideshow */
+  .left {
+    width: 50%;
+    position: relative;
     overflow: hidden;
-    background: radial-gradient(circle at bottom, #001f3f, #000);
+    cursor: pointer;
+    height: 100vh;
+  }
+
+  .left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+
+  .left img.active { opacity: 1; }
+
+  /* 💌 Right side */
+  .right {
+    width: 50%;
+    background: url('roshni/rose.jpg') no-repeat center center/cover;
+    padding: 40px 20px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    text-align: center;
+    background-blend-mode: lighten;
+    backdrop-filter: blur(2px);
+    position: relative;
+    height: 100vh;
   }
+
+  .right::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 0;
+  }
+
+  .right > * { position: relative; z-index: 1; }
 
   h1 {
-    font-size: 3rem;
-    text-shadow: 0 0 30px #ff69b4, 0 0 60px #ff1493;
-    animation: glow 2s ease-in-out infinite alternate;
-    z-index: 10;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px #ff66cc, 0 0 40px #00e6e6;
   }
 
-  @keyframes glow {
-    from { text-shadow: 0 0 20px #ff69b4; }
-    to { text-shadow: 0 0 40px #ff0; }
+  .wish-card {
+    width: 90%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
   }
 
-  p {
+  .wish-card.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .wish-card h3 {
+    color: #ffcc00;
     font-size: 1.3rem;
-    max-width: 700px;
-    margin: 20px;
-    text-shadow: 0 0 10px #fff;
-    z-index: 10;
+    margin-bottom: 5px;
+  }
+
+  .wish-card p {
+    margin: 5px 0;
+    font-size: 1rem;
+    line-height: 1.4rem;
+  }
+
+  .buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   button {
-    background: linear-gradient(90deg, #ff0066, #ff6600, #ffff33);
+    background: linear-gradient(45deg, #ff0066, #ffcc00, #00ccff);
     border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-size: 1.4rem;
+    padding: 10px 20px;
+    border-radius: 30px;
     color: white;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.3s;
-    position: absolute;
-    bottom: 40px;
-    z-index: 10;
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
-    70% { box-shadow: 0 0 25px 25px rgba(255, 105, 180, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+    transition: 0.3s;
   }
 
   button:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #fff;
   }
 
-  /* Balloons */
-  .balloon {
+  a.back-link {
     position: absolute;
-    width: 60px;
-    height: 80px;
-    border-radius: 50%;
-    opacity: 0.9;
-    animation: floatUp 8s linear forwards;
+    top: 15px;
+    left: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 2;
   }
 
-  .string {
-    position: absolute;
-    width: 4px;
-    height: 80px;
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    clip-path: path("M 2 0 C 6 10, -2 20, 2 30 S 6 50, 2 60 S -4 70, 2 80");
-    background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
-    animation: wave 2s infinite ease-in-out;
+  a.back-link:hover { text-decoration: underline; }
+
+  /* Scrollbar */
+  .right::-webkit-scrollbar { width: 8px; }
+  .right::-webkit-scrollbar-thumb {
+    background: #ff66cc;
+    border-radius: 5px;
   }
 
-  @keyframes wave {
-    0%, 100% { transform: translateX(-50%) rotate(0deg); }
-    50% { transform: translateX(-48%) rotate(2deg); }
-  }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-120vh); opacity: 0; }
-  }
-
-  /* Fireworks canvas */
-  canvas {
+  /* 🌟 Modal Table */
+  .modal {
+    display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+  }
+
+  .modal-content {
+    background: rgba(255,255,255,0.95);
+    color: #000;
+    border-radius: 15px;
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+    overflow-y: auto;
+    max-height: 80vh;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background: #ff66cc;
+    color: white;
+  }
+
+  .close-btn {
+    background: #ff0066;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    float: right;
+    cursor: pointer;
+  }
+
+  .close-btn:hover { background: #cc0055; }
+
+  /* 📱 MOBILE VIEW FIX */
+  @media (max-width: 768px) {
+    body {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .left, .right {
+      width: 100%;
+      height: 50vh;
+    }
+
+    .right {
+      padding: 20px 10px 80px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .wish-card {
+      width: 95%;
+      font-size: 0.9rem;
+      padding: 15px;
+    }
+
+    button {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+    }
+
+    .buttons {
+      position: static;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .modal-content {
+      width: 95%;
+      max-height: 80vh;
+    }
   }
 </style>
 </head>
+
 <body>
 
-  <h1>🎉 Happy Birthday, Roshni 🎉</h1>
-  <p>“Make It Count, Live The Moment” 💕</p>
-  <p>"Click anywhere to fly?"</p>
+  <div class="left" id="slideshow">
+    <img src="media/rose1.jpg" class="active">
+    <img src="roshni/rose.jpg">
+    <img src="roshni/rose2.jpg">
+    <img src="roshni/rose3.jpg">
+    <img src="roshni/rose4.jpg">
+    <img src="roshni/rose5.jpg">
+    <img src="roshni/rose6.jpg">
+    <img src="roshni/rose7.jpg">
+  </div>
 
-  <button id="celebrateBtn">✨ Celebrate ✨</button>
+  <div class="right">
+    <h1>💖 Birthday Wishes 💖</h1>
+    <div id="wishesList">Loading wishes...</div>
 
-  <audio id="bgMusic" loop>
-    <source src="media/bgm.mp3" type="audio/mpeg">
+    <div class="buttons">
+      <button onclick="refreshWishes()">🔄 Refresh Wishes</button>
+      <button onclick="showTable()">📊 Show All</button>
+    </div>
+  </div>
+
+  <a href="select.html" class="back-link">← Back</a>
+
+  <div id="tableModal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✖ Close</button>
+      <h2>All Birthday Wishes 🎉</h2>
+      <div id="tableContainer">Loading...</div>
+    </div>
+  </div>
+
+  <audio autoplay loop>
+    <source src="birthday.mp3" type="audio/mpeg">
   </audio>
 
-  <canvas id="fireworks"></canvas>
+<script>
+  const SHEETDB_URL = "https://sheetdb.io/api/v1/9gbk89xckfntu";
 
-  <script>
-    const balloonColors = ['#0033cc', '#ff0000', '#ffff00', '#660066', '#ff4500'];
+  const slides = document.querySelectorAll(".left img");
+  let current = 0;
+  let autoSlide;
 
-    function createBalloon(x = Math.random() * innerWidth, y = innerHeight + 100) {
-      const b = document.createElement('div');
-      b.className = 'balloon';
-      b.style.left = (x - 30) + 'px';
-      b.style.top = (y - 60) + 'px';
-      b.style.background = balloonColors[Math.floor(Math.random() * balloonColors.length)];
-      b.style.animationDuration = (6 + Math.random() * 4) + 's';
-      const s = document.createElement('div');
-      s.className = 'string';
-      b.appendChild(s);
-      document.body.appendChild(b);
-      setTimeout(() => b.remove(), 9000);
-    }
+  function startSlideshow() {
+    autoSlide = setInterval(nextSlide, 3500);
+  }
 
-    // Continuous balloon flow
-    setInterval(() => { for (let i = 0; i < 2; i++) createBalloon(); }, 1000);
+  function nextSlide() {
+    slides[current].classList.remove("active");
+    current = (current + 1) % slides.length;
+    slides[current].classList.add("active");
+  }
 
-    // Balloons appear on touch or click
-    document.addEventListener('click', e => {
-      createBalloon(e.clientX, e.clientY);
-    });
-    document.addEventListener('touchstart', e => {
-      const touch = e.touches[0];
-      createBalloon(touch.clientX, touch.clientY);
-    });
+  document.querySelector(".left").addEventListener("click", () => {
+    clearInterval(autoSlide);
+    nextSlide();
+    startSlideshow();
+  });
 
-    // Fireworks setup
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-    let particles = [];
+  startSlideshow();
 
-    function createFirework(x, y) {
-      for (let i = 0; i < 80; i++) {
-        particles.push({
-          x, y,
-          angle: Math.random() * 2 * Math.PI,
-          speed: Math.random() * 5 + 2,
-          alpha: 1,
-          color: `hsl(${Math.random()*360},100%,60%)`
-        });
+  async function loadWishes() {
+    try {
+      const res = await fetch(SHEETDB_URL);
+      const data = await res.json();
+      const list = document.getElementById("wishesList");
+      list.innerHTML = "";
+
+      if (data.length === 0) {
+        list.innerHTML = "<p>No wishes yet! 🥺</p>";
+        return;
       }
-    }
 
-    function animateFireworks() {
-      ctx.fillStyle = "rgba(0,0,0,0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-        p.x += Math.cos(p.angle) * p.speed;
-        p.y += Math.sin(p.angle) * p.speed;
-        p.alpha -= 0.01;
-        if (p.alpha <= 0) particles.splice(i, 1);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 3, 0, 2 * Math.PI);
-        ctx.fill();
+      data.forEach((entry, index) => {
+        const card = document.createElement("div");
+        card.className = "wish-card";
+        card.innerHTML = `
+          <h3>${entry.name || "Anonymous"} 💫</h3>
+          <p><strong>Nickname:</strong> ${entry.nickname || "—"}</p>
+          <p><strong>Likes:</strong> ${entry.like || "—"}</p>
+          <p><strong>Wish:</strong> ${entry.wish || "—"}</p>
+        `;
+        list.appendChild(card);
+        setTimeout(() => card.classList.add("show"), index * 200);
       });
-      requestAnimationFrame(animateFireworks);
+    } catch (err) {
+      console.error(err);
+      document.getElementById("wishesList").innerHTML = "<p>⚠️ Error loading wishes</p>";
     }
-    animateFireworks();
+  }
 
-    // Initial fireworks when page loads
-    window.onload = () => {
-      for (let i = 0; i < 4; i++) {
-        setTimeout(() => createFirework(innerWidth/2, innerHeight/2), i * 400);
-      }
-    };
+  function refreshWishes() {
+    document.getElementById("wishesList").innerHTML = "Refreshing...";
+    loadWishes();
+  }
 
-    // Button click → play music, vibration, fireworks, redirect
-    document.getElementById('celebrateBtn').addEventListener('click', () => {
-      const music = document.getElementById('bgMusic');
-      music.muted = false;
-      music.play().catch(()=>{});
+  async function showTable() {
+    const modal = document.getElementById("tableModal");
+    const tableContainer = document.getElementById("tableContainer");
+    modal.style.display = "flex";
+    tableContainer.innerHTML = "Loading...";
 
-      // Strong vibration pattern
-      if (navigator.vibrate) navigator.vibrate([500, 200, 500, 200, 800]);
-
-      // Burst fireworks
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => createFirework(innerWidth/2, innerHeight/2), i * 250);
+    try {
+      const res = await fetch(SHEETDB_URL);
+      const data = await res.json();
+      if (data.length === 0) {
+        tableContainer.innerHTML = "<p>No data found.</p>";
+        return;
       }
 
-      const id = prompt("Enter your ID:");
-      const pass = prompt("Enter your Password:");
-      if (id === "roshni" && pass === "roshni") {
-        alert("🎂 Welcome Roshni! Let’s begin the celebration!");
-        window.location.href = "select.html";
-      } else {
-        alert("❌ Incorrect ID or Password!");
-      }
-    });
-  </script>
+      let html = `<table>
+        <tr><th>Name</th><th>Nickname</th><th>Likes</th><th>Wish</th></tr>`;
+      data.forEach(d => {
+        html += `<tr>
+          <td>${d.name || "—"}</td>
+          <td>${d.nickname || "—"}</td>
+          <td>${d.like || "—"}</td>
+          <td>${d.wish || "—"}</td>
+        </tr>`;
+      });
+      html += "</table>";
+      tableContainer.innerHTML = html;
+    } catch (err) {
+      tableContainer.innerHTML = "<p>Error loading data!</p>";
+    }
+  }
+
+  function closeModal() {
+    document.getElementById("tableModal").style.display = "none";
+  }
+
+  loadWishes();
+</script>
+
 </body>
 </html>
